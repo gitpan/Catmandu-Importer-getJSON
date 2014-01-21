@@ -1,0 +1,10 @@
+CHANGES
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+cpanfile
+lib/Catmandu/Importer/getJSON.pm
+t/00_compile.t
+t/10_import.t

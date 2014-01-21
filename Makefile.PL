@@ -1,0 +1,56 @@
+
+use strict;
+use warnings;
+
+use 5.010000;
+
+use ExtUtils::MakeMaker 6.30;
+
+
+
+my %WriteMakefileArgs = (
+  "ABSTRACT" => "Load JSON-encoded data from a server using a GET HTTP request",
+  "AUTHOR" => "Jakob Vo\x{df}",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
+  },
+  "DISTNAME" => "Catmandu-Importer-getJSON",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Catmandu::Importer::getJSON",
+  "PREREQ_PM" => {
+    "Catmandu" => "0.7",
+    "Furl" => "3.0",
+    "Moo" => "1.0",
+    "URI::Template" => "0.18"
+  },
+  "TEST_REQUIRES" => {},
+  "VERSION" => "0.1",
+  "test" => {
+    "TESTS" => "t/*.t"
+  }
+);
+
+
+my %FallbackPrereqs = (
+  "Catmandu" => "0.7",
+  "Furl" => "3.0",
+  "Moo" => "1.0",
+  "URI::Template" => "0.18"
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  delete $WriteMakefileArgs{TEST_REQUIRES};
+  delete $WriteMakefileArgs{BUILD_REQUIRES};
+  $WriteMakefileArgs{PREREQ_PM} = \%FallbackPrereqs;
+}
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+

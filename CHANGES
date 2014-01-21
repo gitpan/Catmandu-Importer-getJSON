@@ -1,0 +1,6 @@
+Changelog for Catmandu-Importer-getJSON
+
+0.1 2014-01-21T11:08:57
+ - use UTF-8 [Jakob Voss]
+ - initial version [Jakob Voss]
+
