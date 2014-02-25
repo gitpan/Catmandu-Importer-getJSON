@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
     "URI::Template" => "0.18"
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.1",
+  "VERSION" => "0.1.1",
   "test" => {
     "TESTS" => "t/*.t"
   }

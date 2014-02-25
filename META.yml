@@ -15,7 +15,7 @@ name: Catmandu-Importer-getJSON
 provides:
   Catmandu::Importer::getJSON:
     file: lib/Catmandu/Importer/getJSON.pm
-    version: 0.1
+    version: v0.1.1
 requires:
   Catmandu: 0.7
   Furl: 3.0
@@ -26,4 +26,4 @@ resources:
   bugtracker: https://github.com/nichtich/Catmandu-Importer-getJSON/issues
   homepage: https://github.com/nichtich/Catmandu-Importer-getJSON
   repository: https://github.com/nichtich/Catmandu-Importer-getJSON.git
-version: 0.1
+version: 0.1.1
