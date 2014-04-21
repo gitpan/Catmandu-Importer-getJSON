@@ -4,7 +4,9 @@ Changelog for Catmandu-Importer-getJSON
  - use UTF-8 [Jakob Voss]
  - initial version [Jakob Voss]
 
-0.1.1 2014-02-25T07:58:45
+0.2.0 2014-04-21T19:16:19
+ - introduced request and response hooks [Jakob Voss]
+ - new option --dry [Jakob Voss]
  - option --from closes issue #1 [Jakob Voss]
  - minor documentation changes [Jakob Voss]
 

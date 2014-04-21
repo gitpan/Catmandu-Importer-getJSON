@@ -1,6 +1,6 @@
 package Catmandu::Importer::getJSON;
 #ABSTRACT: Load JSON-encoded data from a server using a GET HTTP request
-our $VERSION = '0.1.1'; #VERSION
+our $VERSION = '0.2.0'; #VERSION
 
 use Catmandu::Sane;
 use Moo;
@@ -16,6 +16,7 @@ has from    => ( is => 'ro' );
 has timeout => ( is => 'ro', default => sub { 10 } );
 has agent   => ( is => 'ro' );
 has proxy   => ( is => 'ro' );
+has dry     => ( is => 'ro' );
 has headers => ( is => 'ro', default => sub { [ 'Accept' => 'application/json' ] } );
 has client  => (
     is => 'ro',
@@ -75,34 +76,51 @@ sub generator {
     }
 }
 
+sub request_hook {
+    my ($self, $line) = @_;
+
+    if ($line =~ /^\s*{/) {
+        return $self->json->decode($line); 
+    } else {
+        my $url;
+
+        # plain URL
+        if ( $line =~ /^https?:\// ) {
+            $url = URI->new($line);
+        # URL path (and optional query)
+        } elsif ( $line =~ /^\// ) {
+            $url = "".$self->url;
+            $url =~ s{/$}{}; 
+            $line =~ s{\s+$}{};
+            $url = URI->new($url . $line);
+        }
+ 
+        return $url;
+    }
+}
+
 sub _construct_url {
     my ($self, $line) = @_;
-    chomp $line;
 
+    chomp $line;
+    $line =~ s/^\s+|\s+$//g;
+
+    my $request = $self->request_hook($line);
     my $url;
 
-    # plain URL
-    if ( $line =~ /^https?:\// ) {
-        $url = URI->new($line);
-    # URL path (and optional query)
-    } elsif ( $line =~ /^\// ) {
-        $url = "".$self->url;
-        $url =~ s{/$}{}; 
-        $line =~ s{\s+$}{};
-        $url = URI->new($url . $line);
     # Template or query variables
-    } else { 
-        my $vars = $self->json->decode($line); 
+    if (ref $request and not blessed($request)) {
         $url = $self->url;
         if ($url->isa('URI::Template')) {
-            $url = $url->process($vars);
+            $url = $url->process($request);
         } else {
             $url = $url->clone;
-            $url->query_form( $vars );
-
-        }
+            $url->query_form($request);
+        }         
+    } else {
+        $url = $request;
     }
-   
+  
     warn "failed to _construct URL from: '$line'\n" unless $url;
 
     return $url;
@@ -111,6 +129,10 @@ sub _construct_url {
 sub _query_url {
     my ($self, $url) = @_;
 
+    if ( $self->dry ) {
+        return { url => "$url" };
+    }
+
     my $response = $self->client->get($url, $self->headers);
     unless ($response->is_success) {
         warn "request failed: $url\n";
@@ -118,9 +140,12 @@ sub _query_url {
     }
 
     my $content = $response->decoded_content;
+    my $data    = $self->json->decode($content);
 
-    $self->json->decode($content);
+    $self->response_hook($data);
 }
+
+sub response_hook { $_[1] }
 
 1;
 
@@ -136,7 +161,7 @@ Catmandu::Importer::getJSON - Load JSON-encoded data from a server using a GET H
 
 =head1 VERSION
 
-version 0.1.1
+version 0.2.0
 
 =head1 SYNOPSIS
 
@@ -160,6 +185,7 @@ For more convenience the L<catmandu> command line client can be used:
 
     echo http://example.org/alice.json | catmandu convert getJSON to YAML
     catmandu convert getJSON --from http://example.org/alice.json to YAML
+    catmandu convert getJSON --dry 1 --url http://{domain}/robots.txt < domains
 
 =head1 DESCRIPTION
 
@@ -216,6 +242,10 @@ Optional HTTP client settings.
 
 Instance of a L<Furl> HTTP client to perform requests with.
 
+=item dry
+
+Don't do any HTTP requests but return URLs that data would be queried from. 
+
 =item file / fh
 
 Input to read lines from (see L<Catmandu::Importer>). Defaults to STDIN.
@@ -225,6 +255,20 @@ Input to read lines from (see L<Catmandu::Importer>). Defaults to STDIN.
 An optional fix to be applied on every item (see L<Catmandu::Fix>).
 
 =back
+
+=head1 EXTENDING
+
+This importer provides two methods to filter requests and responses,
+respectively. See L<Catmandu::Importer::Wikidata> for an example.
+
+=head2 request_hook
+
+Gets a whitespace-trimmed input line and is expected to return an unblessed
+object or an URL.
+
+=head2 response_hook
+
+Gets the queried response object and is expected to return an object.
 
 =head1 LIMITATIONS
 
