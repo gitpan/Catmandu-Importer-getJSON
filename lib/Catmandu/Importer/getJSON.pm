@@ -1,6 +1,6 @@
 package Catmandu::Importer::getJSON;
 #ABSTRACT: Load JSON-encoded data from a server using a GET HTTP request
-our $VERSION = '0.2.0'; #VERSION
+our $VERSION = '0.2'; #VERSION
 
 use Catmandu::Sane;
 use Moo;
@@ -161,7 +161,7 @@ Catmandu::Importer::getJSON - Load JSON-encoded data from a server using a GET H
 
 =head1 VERSION
 
-version 0.2.0
+version 0.2
 
 =head1 SYNOPSIS
 
