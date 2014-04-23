@@ -1,6 +1,9 @@
 Changelog for Catmandu-Importer-getJSON
 
-0.2 2014-04-22T18:10:26
+0.3 2014-04-23T19:29:18
+ - fix option 'from' [Jakob Voss]
+
+0.2 2014-04-22T18:08:25
  - version number [Jakob Voss]
  - introduced request and response hooks [Jakob Voss]
  - new option --dry [Jakob Voss]

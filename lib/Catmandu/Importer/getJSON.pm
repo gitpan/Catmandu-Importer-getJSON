@@ -1,6 +1,6 @@
 package Catmandu::Importer::getJSON;
 #ABSTRACT: Load JSON-encoded data from a server using a GET HTTP request
-our $VERSION = '0.2'; #VERSION
+our $VERSION = '0.3'; #VERSION
 
 use Catmandu::Sane;
 use Moo;
@@ -12,7 +12,7 @@ use URI::Template;
 with 'Catmandu::Importer';
 
 has url     => ( is => 'rw', trigger => 1 );
-has from    => ( is => 'ro' );
+has from    => ( is => 'ro');
 has timeout => ( is => 'ro', default => sub { 10 } );
 has agent   => ( is => 'ro' );
 has proxy   => ( is => 'ro' );
@@ -49,18 +49,19 @@ sub _trigger_url {
 
 sub generator {
     my ($self) = @_;
-
+    
     if ($self->from) {
         return sub {
-            state $done = 0;
-            return if $done;
-            $done = 1;
-            return $self->_query_url($self->from);
+            state $data = do {
+                my $r = $self->_query_url($self->from);
+                (ref $r // '') eq 'ARRAY' ? $r : [$r];
+            };
+            return shift @$data;
         }
     }
 
     sub {
-        state $fh   = $self->fh;
+        state $fh = $self->fh;
         state $data;
 
         if ( $data and ref $data eq 'ARRAY' and @$data ) {
@@ -161,7 +162,7 @@ Catmandu::Importer::getJSON - Load JSON-encoded data from a server using a GET H
 
 =head1 VERSION
 
-version 0.2
+version 0.3
 
 =head1 SYNOPSIS
 
