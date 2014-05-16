@@ -1,6 +1,13 @@
 Changelog for Catmandu-Importer-getJSON
 
-0.3 2014-04-23T19:29:18
+0.40 2014-05-16T09:08:44
+ - document Catmandu::Fix::get_json [Jakob Voss]
+ - enable logging and option 'wait' [Jakob Voss]
+ - bump version [Jakob Voss]
+ - cpanfile [vpeil]
+ - get_json fix added [vpeil]
+
+0.3 2014-04-23T19:28:43
  - fix option 'from' [Jakob Voss]
 
 0.2 2014-04-22T18:08:25

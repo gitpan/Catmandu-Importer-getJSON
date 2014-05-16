@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution Catmandu-Importer-getJSON,
-version 0.3:
+version 0.40:
 
   Load JSON-encoded data from a server using a GET HTTP request
 

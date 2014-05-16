@@ -6,6 +6,8 @@ META.yml
 Makefile.PL
 README
 cpanfile
+lib/Catmandu/Fix/get_json.pm
 lib/Catmandu/Importer/getJSON.pm
 t/00_compile.t
 t/10_import.t
+t/20_fix.t

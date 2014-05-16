@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use 5.010000;
+use 5.010001;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -21,13 +21,13 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Catmandu::Importer::getJSON",
   "PREREQ_PM" => {
-    "Catmandu" => "0.7",
+    "Catmandu" => "0.9",
     "Furl" => "3.0",
     "Moo" => "1.0",
     "URI::Template" => "0.18"
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.3",
+  "VERSION" => "0.40",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -35,7 +35,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-  "Catmandu" => "0.7",
+  "Catmandu" => "0.9",
   "Furl" => "3.0",
   "Moo" => "1.0",
   "URI::Template" => "0.18"
