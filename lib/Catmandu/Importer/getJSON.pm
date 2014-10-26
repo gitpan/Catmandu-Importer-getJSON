@@ -1,6 +1,6 @@
 package Catmandu::Importer::getJSON;
-#ABSTRACT: Load JSON-encoded data from a server using a GET HTTP request
-our $VERSION = '0.40'; #VERSION
+
+our $VERSION = '0.41';
 
 use Catmandu::Sane;
 use Moo;
@@ -161,20 +161,21 @@ sub _query_url {
 sub response_hook { $_[1] }
 
 1;
-
 __END__
-
-=pod
-
-=encoding UTF-8
 
 =head1 NAME
 
-Catmandu::Importer::getJSON - Load JSON-encoded data from a server using a GET HTTP request
+Catmandu::Importer::getJSON - load JSON-encoded data from a server using a GET HTTP request
 
-=head1 VERSION
+=begin markdown
 
-version 0.40
+# STATUS
+
+[![Build Status](https://travis-ci.org/nichtich/Catmandu-Importer-getJSON.png)](https://travis-ci.org/nichtich/Catmandu-Importer-getJSON)
+[![Coverage Status](https://coveralls.io/repos/nichtich/Catmandu-Importer-getJSON/badge.png)](https://coveralls.io/r/nichtich/Catmandu-Importer-getJSON)
+[![Kwalitee Score](http://cpants.cpanauthors.org/dist/Catmandu-Importer-getJSON.png)](http://cpants.cpanauthors.org/dist/Catmandu-Importer-getJSON)
+
+=end markdown
 
 =head1 SYNOPSIS
 
@@ -309,15 +310,13 @@ modules such as L<HTTP::Async>, for retrieving multiple URLs at the same time..
 
 L<Catmandu::Fix::get_json> provides this importer as fix function.
 
-=head1 AUTHOR
-
-Jakob Voß
+=encoding utf8
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Jakob Voß.
+Copyright Jakob Voß, 2014-
 
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+This library is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
 
 =cut

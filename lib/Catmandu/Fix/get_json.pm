@@ -1,5 +1,6 @@
 package Catmandu::Fix::get_json;
-#ABSTRACT: get JSON data from an URL as fix function
+
+our $VERSION = '0.41';
 
 use Catmandu::Sane;
 use Moo;
@@ -33,20 +34,11 @@ sub emit {
 }
 
 1;
-
 __END__
-
-=pod
-
-=encoding UTF-8
 
 =head1 NAME
 
 Catmandu::Fix::get_json - get JSON data from an URL as fix function
-
-=head1 VERSION
-
-version 0.40
 
 =head1 SYNOPSIS
 
@@ -64,16 +56,5 @@ response is added as new item or to a field of the current item.
 By now the only additional option of L<Catmandu::Importer::getJSON> supported
 by this fix function is C<dry>. Future releases will also support setting the
 URL to a field value of the current item.
-
-=head1 AUTHOR
-
-Jakob Voß
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2014 by Jakob Voß.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
 
 =cut
